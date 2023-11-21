@@ -2,7 +2,7 @@
 
 #include <sil/sil.hpp>
 #include "random.hpp"
-#include<math.h>
+#include <math.h>
 
 
 void neGarderQueLeVert(sil::Image image);
@@ -58,7 +58,8 @@ void splitRGB(sil::Image image);
 Difficultés à comprendre qu'il fallait créer une nouvelle image
 et comment décaler les pixels sans sortir du cadre
 Chaque pixel sur la nouvelle image regarde, s'il le peut le rouge sur un pixel 
-qui le précède, le bleu sur un qui le devance et le vert à ses coordonnées actuelles*/
+qui le précède, le bleu sur un qui le devance et le vert à ses coordonnées actuelles
+*/
 
 void luminosite(sil::Image image);
 
@@ -77,7 +78,8 @@ void glitch(sil::Image image);
 Difficulté à gérer les nombreuses opérandes simultanément
 Création d'une boucle, chaque itération correspondant à un glitch, 
 glitch représenté par l'échange de deux rectangles dont les positions (gérées par un struct)
-et dimmensions sont définies aléatoirement à chaque itération*/
+et dimmensions sont définies aléatoirement à chaque itération
+*/
 
 void fractaleMandelbrot(sil::Image image);
 
@@ -85,7 +87,7 @@ void vortex(sil::Image image);
 
 void tramage(sil::Image image);
 
-void normalisatiHistogramme(sil::Image image);
+void normalisationHistogramme(sil::Image image);
 
 void convolutions(sil::Image image);
 

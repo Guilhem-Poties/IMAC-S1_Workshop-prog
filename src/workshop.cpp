@@ -92,7 +92,18 @@ void imageBruitee(sil::Image image) {
 }
 
 void rotation90(sil::Image image) {
-    sil::Image image2resultat {345,300};
+    sil::Image image2resultat {image.height(),image.width()};
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            //image2resultat.pixel(x,y)=image.pixel(y,image.width()-x-1);
+            image2resultat.pixel(y,image.width()-x-1)=image.pixel(x,y);
+        }
+    }
+    image2resultat.save("output/Rotation.png");
+    //std::cout<<image.height()<<" "<<image.width();
+    //345 300
 }
 
 void splitRGB(sil::Image image) {

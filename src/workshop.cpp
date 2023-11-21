@@ -9,7 +9,6 @@ void neGarderQueLeVert(sil::Image image) {
             image.pixel(x, y).b = 0.f;
         }
     }
-
     image.save("output/neGarderQueLeVert.png");
 }
 
@@ -52,13 +51,26 @@ void degrade(sil::Image image) {
 
 }
 
-void miroir(sil::Image image) {
-    for (int x{0}; x < image.width()/2; x++)
+void miroir(sil::Image image, bool horizontal) {
+    if (horizontal)
     {
-        for (int y{0}; y < image.height(); y++)
+        for (int x{0}; x < image.width(); x++)
         {
-            std::swap(image.pixel(x,y), image.pixel(image.width() -(x+1),y));
+            for (int y{0}; y < image.height()/2; y++)
+            {
+                std::swap(image.pixel(x,y), image.pixel(x,image.height() -(y+1)));
+            }
         }
+    }
+    else
+    {
+        for (int x{0}; x < image.width()/2; x++)
+        {
+            for (int y{0}; y < image.height(); y++)
+            {
+                std::swap(image.pixel(x,y), image.pixel(image.width() -(x+1),y));
+            }
+        }    
     }
     image.save("output/miroir.png");
 }
@@ -81,19 +93,6 @@ void imageBruitee(sil::Image image) {
 
 void rotation90(sil::Image image) {
     sil::Image image2resultat {345,300};
-
-    for (int x{0}; x < image.width(); x++)
-    {
-        for (int y{0}; y < image.height(); y++)
-        {
-            //image2resultat.pixel(x,y)=image.pixel(y,image.width()-x-1);
-            image2resultat.pixel(y,image.width()-x-1)=image.pixel(x,y);
-        }
-    }
-    image2resultat.save("output/Rotation.png");
-    //std::cout<<image.height()<<" "<<image.width();
-    //345 300
-
 }
 
 void splitRGB(sil::Image image) {
@@ -124,33 +123,74 @@ void splitRGB(sil::Image image) {
 
 void luminosite(sil::Image image);
 
-void disque(sil::Image image);
+void disque(int rayon) {
+    sil::Image image {500, 500};
 
-void cercle(sil::Image image);
-
-void rosace(sil::Image image);
-
-void mosaique(sil::Image image) {
-    /*
-    int repetition {5};
-    sil::Image nouvelleImage {image.width(), image.height()*repetition};
-
-    for (int i{0}; i < repetition^2; i++)
+    if (rayon < 250)
     {
-        for (int x{0}; x < image.width()/2; x++)
+        for (int x{0}; x < image.width(); x++)
         {
             for (int y{0}; y < image.height(); y++)
             {
-                nouvelleImage.pixel(x + ((image.width()*i)%repetition), y + ((image.height()*i)%repetition)) = image.pixel(x,y);
+                if ((x > ((image.width() - rayon)/2) && (x < image.width() - ((image.width() - rayon)/2))) || (y > ((image.height() - rayon)/2) && (y < image.height() - ((image.height() - rayon)/2))))
+                {
+                    image.pixel(x,y) = {1, 1, 1};
+                }
+                
             }
         }
     }
-
-    nouvelleImage.save("output/mosaique.png");
-    */
+    image.save("output/disque.png");
 }
 
-void mosaiqueMiroir(sil::Image image);
+void cercle(int rayon, int epaisseur, int centre) {
+
+}
+
+void rosace(int rayon, int epaisseur, int centre);
+
+void mosaique(sil::Image image, int repetition) {
+    sil::Image nouvelleImage {image.width(), image.height()};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            nouvelleImage.pixel(x,y) = image.pixel((x*repetition)%image.width(),(y*repetition)%image.height());
+        }
+    }
+    nouvelleImage.save("output/mosaique.png");
+}
+
+void mosaiqueMiroir(sil::Image image, int repetition) {
+    sil::Image nouvelleImage {image.width(), image.height()};
+
+    bool miroirHorizontal {false};
+
+    bool miroirVertical {false};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            if ((x/image.width()*repetition)%2 != 0)
+            {
+                miroirHorizontal = true;
+            }
+            
+            if (miroirHorizontal)
+            {
+                nouvelleImage.pixel(x,y) = image.pixel(((image.width() - (x+1))*repetition)%image.width(),(y*repetition)%image.height());
+            }
+            else
+            {
+                nouvelleImage.pixel(x,y) = image.pixel((x*repetition)%image.width(),(y*repetition)%image.height());
+            }
+            
+        }
+    }
+    nouvelleImage.save("output/mosaiqueMiroir.png");
+}
 
 void glitch(sil::Image image) {
     int w {};
@@ -208,3 +248,42 @@ void Kmeans(sil::Image image);
 void diamondSquare(sil::Image image);
 
 void heightMap(sil::Image image);
+
+
+//Bonus
+
+void croix(int taille) {
+    sil::Image image {500, 500};
+
+    if (taille < 250)
+    {
+        for (int x{0}; x < image.width(); x++)
+        {
+            for (int y{0}; y < image.height(); y++)
+            {
+                if ((x > ((image.width() - taille)/2) && (x < image.width() - ((image.width() - taille)/2))) || (y > ((image.height() - taille)/2) && (y < image.height() - ((image.height() - taille)/2))))
+                {
+                    image.pixel(x,y) = {1, 1, 1};
+                }
+                
+            }
+        }
+    }
+    image.save("output/croix.png");
+}
+
+void mariniere(sil::Image image) {
+    sil::Image nouvelleImage {image.width(), image.height()};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            nouvelleImage.pixel(x,y) = image.pixel(x%5,y%5);
+        }
+    }
+
+    nouvelleImage.save("output/mariniere.png");
+}
+
+void symetrie();

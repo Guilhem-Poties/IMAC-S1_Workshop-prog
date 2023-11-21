@@ -30,7 +30,7 @@ Pour chacune des couleurs faire 1 - la valeur de la couleur
 
 void degrade(sil::Image image);
 
-void miroir(sil::Image image);
+void miroir(sil::Image image, bool horizontal);
 /*Fait
 Aucune difficulté
 Echanger tous les pixels avec leurs pixels opposés sur l'axe horizontal
@@ -61,15 +61,15 @@ qui le précède, le bleu sur un qui le devance et le vert à ses coordonnées a
 
 void luminosite(sil::Image image);
 
-void disque(sil::Image image);
+void disque(int rayon);
 
-void cercle(sil::Image image);
+void cercle(int rayon, int epaisseur, int centre);
 
-void rosace(sil::Image image);
+void rosace(int rayon, int epaisseur, int centre);
 
-void mosaique(sil::Image image);
+void mosaique(sil::Image image, int repetition);
 
-void mosaiqueMiroir(sil::Image image);
+void mosaiqueMiroir(sil::Image image, int repetition);
 
 void glitch(sil::Image image);
 /*Fait
@@ -103,3 +103,15 @@ void Kmeans(sil::Image image);
 void diamondSquare(sil::Image image);
 
 void heightMap(sil::Image image);
+
+
+//Bonus
+
+void mariniere(sil::Image image);
+/*Fait
+Erreur en expérimentant le modulo de la mosaïque
+Mais qui peut flex d'avoir une marinière     /
+                                            /_/\_
+*/
+
+void symetrie();

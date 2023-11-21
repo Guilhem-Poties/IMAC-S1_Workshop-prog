@@ -4,6 +4,9 @@ int main()
 {
     sil::Image image{"images/logo.png"};
 
+    splitRGB(image);
+    
+    /*
     int repetition {5};
     sil::Image nouvelleImage {image.width(), image.height()*repetition};
 
@@ -19,6 +22,6 @@ int main()
     }
 
     nouvelleImage.save("output/mosaique.png");
-
+    */
     return 0;
 }

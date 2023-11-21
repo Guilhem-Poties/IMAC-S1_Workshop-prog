@@ -297,4 +297,15 @@ void mariniere(sil::Image image) {
     nouvelleImage.save("output/mariniere.png");
 }
 
-void symetrie();
+void symetrie(sil::Image image){
+    sil::Image image2resultat {image.height(),image.width()};
+    
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            image2resultat.pixel(y,x)=image.pixel(x,y);
+        }
+    }
+    image2resultat.save("output/Symetrie.png");
+}

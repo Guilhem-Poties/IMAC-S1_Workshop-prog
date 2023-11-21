@@ -177,36 +177,47 @@ void mosaique(sil::Image image, int repetition) {
 void mosaiqueMiroir(sil::Image image, int repetition) {
     sil::Image nouvelleImage {image.width(), image.height()};
 
-    bool miroirHorizontal {true};
-    bool miroirVertical {true};
+    bool miroirHorizontal {false};
+
+    bool miroirVertical {false};
 
     for (int x{0}; x < image.width(); x++)
     {
         for (int y{0}; y < image.height(); y++)
         {
-            if ((x%(image.width()/repetition)) == 0)
+            if (((x/(image.width()/repetition)))%2 != 0)
             {
-                miroirHorizontal = !miroirHorizontal;
+                miroirHorizontal = true;
+            }
+            else
+            {
+                miroirHorizontal = false;
             }
             
-
-            if ((y/(image.height()/repetition))%2 != 0)
+            if (((y/(image.height()/repetition)))%2 != 0)
             {
                 miroirVertical = true;
             }
-            /*
-            if (miroirVertical)
+            else
             {
-                nouvelleImage.pixel(x,y) = image.pixel((x*repetition)%image.width(), ((image.height() - (y+1))*repetition)%image.height());
-            }*/
-
-            if (miroirHorizontal)
+                miroirVertical = false;
+            }
+            
+            if (miroirHorizontal && miroirVertical)
+            {
+                nouvelleImage.pixel(x,y) = image.pixel(((image.width() - (x+1))*repetition)%image.width(),((image.height() - (y+1))*repetition)%image.height());
+            }
+            else if (miroirVertical)
+            {
+                nouvelleImage.pixel(x,y) = image.pixel((x*repetition)%image.width(),((image.height() - (y+1))*repetition)%image.height());
+            }
+            else if (miroirHorizontal)
             {
                 nouvelleImage.pixel(x,y) = image.pixel(((image.width() - (x+1))*repetition)%image.width(),(y*repetition)%image.height());
             }
             else
             {
-                nouvelleImage.pixel(x,y) = image.pixel((x*repetition)%image.width(), (y*repetition)%image.height());
+                nouvelleImage.pixel(x,y) = image.pixel((x*repetition)%image.width(),(y*repetition)%image.height());
             }
             
         }

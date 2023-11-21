@@ -65,7 +65,7 @@ void luminosite(sil::Image image);
 
 void disque(int rayon);
 
-void cercle(int rayon, int epaisseur, int centre);
+void cercle(int rayon, int epaisseur);
 
 void rosace(int rayon, int epaisseur, int centre);
 

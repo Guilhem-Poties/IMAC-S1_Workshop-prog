@@ -144,7 +144,7 @@ void disque(int rayon) {
         {
             for (int y{0}; y < image.height(); y++)
             {
-                if (pow(x-250,2.0)+pow(y-250,2.0)< pow(rayon,2.0))
+                if (pow(x-250,2.0)+pow(y-250,2.0)< pow(rayon,20))
                 {
                     image.pixel(x,y) = {1, 1, 1};
                 }
@@ -155,8 +155,26 @@ void disque(int rayon) {
     image.save("output/disque.png");
 }
 
-void cercle(int rayon, int epaisseur, int centre) {
+void cercle(int rayon, int epaisseur) {
+    sil::Image image {500, 500};
+    int rayon2{};
+    rayon2 = rayon - epaisseur;
 
+    if (rayon < 250)
+    {
+        for (int x{0}; x < image.width(); x++)
+        {
+            for (int y{0}; y < image.height(); y++)
+            {
+                if (pow(x-250,2.0)+pow(y-250,2.0)< pow(rayon,2.0)&& pow(x-250,2.0)+pow(y-250,2.0)> pow(rayon2,2.0))
+                {
+                    image.pixel(x,y) = {1, 1, 1};
+                }
+                
+            }
+        }
+    }
+    image.save("output/cercle.png");
 }
 
 void rosace(int rayon, int epaisseur, int centre);
@@ -262,7 +280,7 @@ void vortex(sil::Image image);
 
 void tramage(sil::Image image);
 
-void normalisationHistogramme(sil::Image image);
+void normalisatiHistogramme(sil::Image image);
 
 void convolutions(sil::Image image);
 

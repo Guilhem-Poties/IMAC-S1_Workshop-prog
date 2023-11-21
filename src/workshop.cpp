@@ -14,7 +14,6 @@ void neGarderQueLeVert(sil::Image image) {
 }
 
 void echangerLesCanaux(sil::Image image) {
-    sil::Image image{"images/logo.png"};
     for (int x{0}; x < image.width(); x++)
     {
         for (int y{0}; y < image.height(); y++)
@@ -39,8 +38,6 @@ void noirEtBlanc(sil::Image image) {
 }
 
 void negatif(sil::Image image) {
-    sil::Image image{"images/logo.png"};
-
     for (int x{0}; x < image.width(); x++)
     {
         for (int y{0}; y < image.height(); y++)
@@ -83,7 +80,6 @@ void imageBruitee(sil::Image image) {
 }
 
 void rotation90(sil::Image image) {
-    sil::Image image{"images/logo.png"};
     sil::Image image2resultat {345,300};
 
     for (int x{0}; x < image.width(); x++)

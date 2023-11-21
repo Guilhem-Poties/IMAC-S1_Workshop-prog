@@ -2,6 +2,7 @@
 
 #include <sil/sil.hpp>
 #include "random.hpp"
+#include<math.h>
 
 
 void neGarderQueLeVert(sil::Image image);
@@ -114,4 +115,4 @@ Mais qui peut flex d'avoir une marinière     /
                                             /_/\_
 */
 
-void symetrie();
+void symetrie(sil::Image image);

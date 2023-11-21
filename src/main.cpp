@@ -4,7 +4,7 @@ int main()
 {
     sil::Image image{"images/logo.png"};
 
-    splitRGB(image);
+    disque(55);
 
     return 0;
 }

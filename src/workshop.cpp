@@ -1,5 +1,6 @@
 #include "workshop.hpp"
 
+
 void neGarderQueLeVert(sil::Image image) {
     for (int x{0}; x < image.width(); x++)
     {
@@ -143,7 +144,7 @@ void disque(int rayon) {
         {
             for (int y{0}; y < image.height(); y++)
             {
-                if ((x > ((image.width() - rayon)/2) && (x < image.width() - ((image.width() - rayon)/2))) || (y > ((image.height() - rayon)/2) && (y < image.height() - ((image.height() - rayon)/2))))
+                if (pow(x-250,2.0)+pow(y-250,2.0)< pow(rayon,2.0))
                 {
                     image.pixel(x,y) = {1, 1, 1};
                 }

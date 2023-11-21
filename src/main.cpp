@@ -4,7 +4,7 @@ int main()
 {
     sil::Image image{"images/logo.png"};
 
-    disque(55);
+    mosaiqueMiroir(image, 5);
 
     return 0;
 }

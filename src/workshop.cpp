@@ -178,14 +178,13 @@ void mosaiqueMiroir(sil::Image image, int repetition) {
     sil::Image nouvelleImage {image.width(), image.height()};
 
     bool miroirHorizontal {false};
-
     bool miroirVertical {false};
 
     for (int x{0}; x < image.width(); x++)
     {
         for (int y{0}; y < image.height(); y++)
         {
-            if ((x/image.width()*repetition)%2 != 0)
+            if ((x/(image.width()/repetition))%2 != 0)
             {
                 miroirHorizontal = true;
             }
@@ -241,7 +240,7 @@ void vortex(sil::Image image);
 
 void tramage(sil::Image image);
 
-void normalisatiHistogramme(sil::Image image);
+void normalisationHistogramme(sil::Image image);
 
 void convolutions(sil::Image image);
 

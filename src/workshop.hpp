@@ -64,8 +64,17 @@ qui le précède, le bleu sur un qui le devance et le vert à ses coordonnées a
 void luminosite(sil::Image image);
 
 void disque(int rayon);
+/*Fait
+Dificulté à trouver la bonne formule pour le cercle.
+On colore en blanc les pixels se trouvant à l'intérieur du cercle de rayon r
+*/
 
 void cercle(int rayon, int epaisseur);
+/*Fait 
+Aucune difficulté une fois le disque trouvé.
+On rajoute une condition pour colorer les pixels dans le cercle extérieur mais
+en dehors du cercle intérieur.
+*/
 
 void rosace(int rayon, int epaisseur, int centre);
 

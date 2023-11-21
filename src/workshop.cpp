@@ -14,6 +14,15 @@ void neGarderQueLeVert(sil::Image image) {
 }
 
 void echangerLesCanaux(sil::Image image) {
+    sil::Image image{"images/logo.png"};
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            std::swap(image.pixel(x, y).r, image.pixel(x, y).b);
+        }
+    }
+    image.save("output/EchangerLesCanaux.png");
 
 }
 
@@ -30,6 +39,16 @@ void noirEtBlanc(sil::Image image) {
 }
 
 void negatif(sil::Image image) {
+    sil::Image image{"images/logo.png"};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            image.pixel(x,y)={1-image.pixel(x,y).r,1-image.pixel(x,y).g,1-image.pixel(x,y).b};  
+        }
+    }
+    image.save("output/Negatif.png");
 
 }
 void degrade(sil::Image image) {
@@ -64,6 +83,20 @@ void imageBruitee(sil::Image image) {
 }
 
 void rotation90(sil::Image image) {
+    sil::Image image{"images/logo.png"};
+    sil::Image image2resultat {345,300};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            //image2resultat.pixel(x,y)=image.pixel(y,image.width()-x-1);
+            image2resultat.pixel(y,image.width()-x-1)=image.pixel(x,y);
+        }
+    }
+    image2resultat.save("output/Rotation.png");
+    //std::cout<<image.height()<<" "<<image.width();
+    //345 300
 
 }
 

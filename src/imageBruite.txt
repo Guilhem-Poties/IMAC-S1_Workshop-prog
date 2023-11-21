@@ -1,0 +1,22 @@
+#include <sil/sil.hpp>
+#include "random.hpp"
+
+int main()
+{
+    sil::Image image{"images/logo.png"};
+    
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            if (random_int(0, 4) == 0)
+            {
+                image.pixel(x, y).r = random_float(0.f, 1.f);
+                image.pixel(x, y).b = random_float(0.f, 1.f);
+                image.pixel(x, y).g = random_float(0.f, 1.f);
+            }
+        }
+    }
+
+    image.save("output/imageBruite.png");
+}

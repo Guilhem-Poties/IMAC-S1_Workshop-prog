@@ -108,7 +108,9 @@ void fractaleMandelbrot(sil::Image image);
 
 glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle);
 
-void vortex(sil::Image image);
+enum forme {ciculaire, losange};
+
+void vortex(sil::Image image, forme forme, unsigned int intensite);
 
 void tramage(sil::Image image);
 
@@ -135,7 +137,7 @@ void heightMap(sil::Image image);
 
 //Bonus
 
-void caléidoscope(sil::Image image);
+void caleidoscope(sil::Image image);
 
 void reflet(sil::Image image);
 

@@ -301,7 +301,7 @@ glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle) {
     return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
 }
 
-void vortex(sil::Image image) {
+void vortex(sil::Image image, forme forme, unsigned int intensite) {
     sil::Image nouvelleImage{image.width(), image.height()};
 
     glm::vec2 center {image.width()/2, image.height()/2};
@@ -313,7 +313,16 @@ void vortex(sil::Image image) {
     {
         for (int y{0}; y < image.height(); y++)
         {
-            point = rotated({x,y}, center, (angle * ((abs(center[0] - x))/image.width()/2 + abs(center[1] - y)/image.height()/2) * 100));
+            if (forme == forme::losange)
+            {
+                point = rotated({x,y}, center, (angle * ((abs(center[0] - x))/image.width()/2 + abs(center[1] - y)/image.height()/2) * intensite));
+            }
+            else if (forme == forme::ciculaire)
+            {
+                point = rotated({x,y}, center, sqrt(pow(abs(center[0] - x),2.0) + pow(abs(center[1] - y), 2.0)) * intensite);
+            }
+            
+            
             if (0 <= point[0] && point[0] < image.width() && 0 <= point[1] && point[1] < image.height())
             {
                 nouvelleImage.pixel(x,y) = image.pixel(point[0], point[1]);
@@ -348,7 +357,7 @@ void heightMap(sil::Image image);
 
 //Bonus
 
-void caléidoscope(sil::Image image) {
+void caleidoscope(sil::Image image) {
     sil::Image nouvelleImage{image.width(), image.height()};
 
     glm::vec2 center {image.width()/2, image.height()/2};
@@ -367,7 +376,7 @@ void caléidoscope(sil::Image image) {
             }
         }
     }
-    nouvelleImage.save("output/caléidoscope.png");
+    nouvelleImage.save("output/caleidoscope.png");
 }
 
 void reflet(sil::Image image) {

@@ -63,6 +63,12 @@ qui le précède, le bleu sur un qui le devance et le vert à ses coordonnées a
 */
 
 void luminosite(sil::Image image);
+/*Fait
+Difficultés à comprendre sur quoi appliquer la puissance
+On créé deux nouvelles images sur une on applique une puissance 1/2 sur 
+les paramètre rgb de l'image de départ pour l'éclaicir et sur l'autre une 
+puissance 2 pour l'assombrir
+*/
 
 void disque(int rayon);
 /*Fait

@@ -3,6 +3,7 @@
 #include <sil/sil.hpp>
 #include "random.hpp"
 #include <math.h>
+#include <glm/gtx/matrix_transform_2d.hpp>
 
 
 void neGarderQueLeVert(sil::Image image);
@@ -125,6 +126,10 @@ void heightMap(sil::Image image);
 
 
 //Bonus
+
+void caléidoscope(sil::Image image);
+
+void reflet(sil::Image image);
 
 void croix(int taille);
 

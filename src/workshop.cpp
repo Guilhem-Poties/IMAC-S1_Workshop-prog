@@ -297,8 +297,30 @@ void glitch(sil::Image image) {
 
 void fractaleMandelbrot(sil::Image image);
 
+glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle) {
+    return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
+}
+
 void vortex(sil::Image image) {
-    
+    sil::Image nouvelleImage{image.width(), image.height()};
+
+    glm::vec2 center {image.width()/2, image.height()/2};
+    glm::vec2 point {};
+
+    float angle = 2*M_PI;
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            point = rotated({x,y}, center, angle * (abs(center[0] - x) + abs(center[1] - y)));
+            if (0 <= point[0] && point[0] < image.width() && 0 <= point[1] && point[1] < image.height())
+            {
+                nouvelleImage.pixel(x,y) = image.pixel(point[0], point[1]);
+            }
+        }
+    }
+    nouvelleImage.save("output/vortex.png");
 }
 
 void tramage(sil::Image image);
@@ -325,6 +347,51 @@ void heightMap(sil::Image image);
 
 
 //Bonus
+
+void caléidoscope(sil::Image image) {
+    sil::Image nouvelleImage{image.width(), image.height()};
+
+    glm::vec2 center {image.width()/2, image.height()/2};
+    glm::vec2 point {};
+
+    float angle = M_PI;
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            point = rotated({x,y}, center, (angle * (x - center[0])) * (angle * (y - center[1])) * M_PI);
+            if (0 <= point[0] && point[0] < image.width() && 0 <= point[1] && point[1] < image.height())
+            {
+                nouvelleImage.pixel(x,y) = image.pixel(point[0], point[1]);
+            }
+        }
+    }
+    nouvelleImage.save("output/caléidoscope.png");
+}
+
+
+void reflet(sil::Image image) {
+    sil::Image nouvelleImage{image.width(), image.height()};
+
+    glm::vec2 center {image.width()/2, image.height()/2};
+    glm::vec2 point {};
+
+    float angle = M_PI;
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            point = rotated({x,y}, center, angle * ((x - center[0]) + (y - center[1])));
+            if (0 <= point[0] && point[0] < image.width() && 0 <= point[1] && point[1] < image.height())
+            {
+                nouvelleImage.pixel(x,y) = image.pixel(point[0], point[1]);
+            }
+        }
+    }
+    nouvelleImage.save("output/reflet.png");
+}
 
 void croix(int taille) {
     sil::Image image {500, 500};

@@ -4,7 +4,7 @@ int main()
 {
     sil::Image image{"images/logo.png"};
 
-    mosaiqueMiroir(image, 5);
+    vortex(image);
 
     return 0;
 }

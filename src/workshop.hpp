@@ -96,7 +96,7 @@ void mosaiqueMiroir(sil::Image image, int repetition);
 Grande difficulté à gérer l'alternance entre les portions miroirs et le sens de leur inversion
 */
 
-void glitch(sil::Image image);
+void glitch(sil::Image image, int intensite);
 /*Fait
 Difficulté à gérer les nombreuses opérandes simultanément
 Création d'une boucle, chaque itération correspondant à un glitch, 

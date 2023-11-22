@@ -264,7 +264,7 @@ void mosaiqueMiroir(sil::Image image, int repetition) {
     nouvelleImage.save("output/mosaiqueMiroir.png");
 }
 
-void glitch(sil::Image image) {
+void glitch(sil::Image image, int intensite) {
     int w {};
     int h {};
 
@@ -276,7 +276,7 @@ void glitch(sil::Image image) {
     position pos1 {};
     position pos2 {};
 
-    for (int _{0}; _ < 75; _++)
+    for (int _{0}; _ < intensite; _++)
     {
         w = random_int(15, 40);
         h = random_int(2, 10);

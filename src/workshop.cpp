@@ -295,7 +295,32 @@ void glitch(sil::Image image, int intensite) {
     image.save("output/glitch.png");
 }
 
-void fractaleMandelbrot(sil::Image image);
+void fractaleMandelbrot()
+{
+    sil::Image image{500/*width*/, 500/*height*/};
+
+    //std::complex<float> c{3.f, 2.f}; // Définis le nombre c = 3 + 2*i
+    
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            float a = ((x*4)/500)-2;
+            float b = ((y*4)/500)-2;
+            std::complex<float> z{0};
+            std::complex<float> c{a , b};
+            for(int i{0}; i<200; i++)
+            {
+                z = z * z + c;
+            }
+            if (std::abs(z)<2)
+            {
+                image.pixel(x,y) = {1, 1, 1};
+            }
+        }
+    }
+    image.save("output/fractale.png");
+}
 
 glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle) {
     return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;

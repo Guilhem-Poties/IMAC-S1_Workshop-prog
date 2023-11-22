@@ -106,6 +106,8 @@ et dimmensions sont définies aléatoirement à chaque itération
 
 void fractaleMandelbrot(sil::Image image);
 
+glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle);
+
 void vortex(sil::Image image);
 
 void tramage(sil::Image image);

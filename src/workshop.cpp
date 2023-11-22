@@ -313,7 +313,7 @@ void vortex(sil::Image image) {
     {
         for (int y{0}; y < image.height(); y++)
         {
-            point = rotated({x,y}, center, angle * (abs(center[0] - x) + abs(center[1] - y)));
+            point = rotated({x,y}, center, (angle * ((abs(center[0] - x))/image.width()/2 + abs(center[1] - y)/image.height()/2) * 100));
             if (0 <= point[0] && point[0] < image.width() && 0 <= point[1] && point[1] < image.height())
             {
                 nouvelleImage.pixel(x,y) = image.pixel(point[0], point[1]);
@@ -369,7 +369,6 @@ void caléidoscope(sil::Image image) {
     }
     nouvelleImage.save("output/caléidoscope.png");
 }
-
 
 void reflet(sil::Image image) {
     sil::Image nouvelleImage{image.width(), image.height()};

@@ -4,7 +4,7 @@ int main()
 {
     sil::Image image{"images/logo.png"};
 
-    vortex(image);
+    reflet(image);
 
     return 0;
 }

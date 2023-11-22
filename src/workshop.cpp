@@ -391,7 +391,31 @@ void normalisationHistogramme(sil::Image image) {
     image.save("output/normalisationHistogramme.png");
 }
 
-void convolutions(sil::Image image);
+void convolutions(sil::Image image)
+{
+    for (float x{0}; x < image.width(); x++)
+    {
+        for (float y{0}; y < image.height(); y++)
+        {
+            //pixel=moyenne pixels autour
+            if (x>0 && x<image.width()-1 && y>0 && y<image.height()-1)
+            {
+                image.pixel(x,y).r = (image.pixel(x,y).r + image.pixel(x-1,y-1).r + image.pixel(x,y-1).r + 
+                image.pixel(x+1,y-1).r + image.pixel(x+1,y).r + image.pixel(x-1,y).r + image.pixel(x-1,y+1).r +
+                image.pixel(x,y+1).r + image.pixel(x+1,y+1).r)/9;
+
+                image.pixel(x,y).g = (image.pixel(x,y).g + image.pixel(x-1,y-1).g + image.pixel(x,y-1).g + 
+                image.pixel(x+1,y-1).g + image.pixel(x+1,y).g + image.pixel(x-1,y).g + image.pixel(x-1,y+1).g +
+                image.pixel(x,y+1).g + image.pixel(x+1,y+1).g)/9;
+
+                image.pixel(x,y).b = (image.pixel(x,y).b + image.pixel(x-1,y-1).b + image.pixel(x,y-1).b + 
+                image.pixel(x+1,y-1).b + image.pixel(x+1,y).b + image.pixel(x-1,y).b + image.pixel(x-1,y+1).b +
+                image.pixel(x,y+1).b + image.pixel(x+1,y+1).b)/9;
+            }
+        }
+    }
+    image.save("output/convolutions.png");
+}
 
 void netteteContoursEtc(sil::Image image);
 

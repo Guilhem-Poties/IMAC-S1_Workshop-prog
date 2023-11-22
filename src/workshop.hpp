@@ -79,8 +79,15 @@ en dehors du cercle intérieur.
 void rosace(int rayon, int epaisseur, int centre);
 
 void mosaique(sil::Image image, int repetition);
+/*Fait
+Difficulté à toruver l'emplacement correct du modulo
+Sur une une nouvelle image prend un pixel sur le nombre de répétition 
+pour le recopier et faire n^2 répetition de l'image en plus pixélisée*/
 
 void mosaiqueMiroir(sil::Image image, int repetition);
+/*Fait
+Grande difficulté à gérer l'alternance entre les portions miroirs et le sens de leur inversion
+*/
 
 void glitch(sil::Image image);
 /*Fait
@@ -118,6 +125,8 @@ void heightMap(sil::Image image);
 
 
 //Bonus
+
+void croix(int taille);
 
 void mariniere(sil::Image image);
 /*Fait

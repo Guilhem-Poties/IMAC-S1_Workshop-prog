@@ -276,7 +276,9 @@ void glitch(sil::Image image) {
 
 void fractaleMandelbrot(sil::Image image);
 
-void vortex(sil::Image image);
+void vortex(sil::Image image) {
+    
+}
 
 void tramage(sil::Image image);
 

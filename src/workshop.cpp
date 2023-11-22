@@ -134,8 +134,7 @@ void splitRGB(sil::Image image, int ecart) {
     nouvelleImage.save("output/splitRGB.png");
 }
 
-void luminosite(sil::Image image)
-{
+void luminosite(sil::Image image) {
     sil::Image clair{image.width(), image.height()};
     sil::Image sombre{image.width(), image.height()};
     for (int x{0}; x < image.width(); x++)
@@ -360,7 +359,31 @@ void vortex(sil::Image image, forme forme, unsigned int intensite) {
 
 void tramage(sil::Image image);
 
-void normalisatiHistogramme(sil::Image image);
+void normalisationHistogramme(sil::Image image) {
+    //recherche du pixel le plus sombre et du plus luminineux
+    glm::vec3 min {1,1,1};
+    glm::vec3 max {0,0,0};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            min = glm::min(min, image.pixel(x,y));
+            max = glm::max(max, image.pixel(x,y));
+        }
+    }
+
+    glm::vec3 ratioMax = {1,1,1};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            image.pixel(x,y) = (image.pixel(x,y) - min) * (ratioMax / max) ;
+        }
+    }
+    image.save("output/normalisationHistogramme.png");
+}
 
 void convolutions(sil::Image image);
 

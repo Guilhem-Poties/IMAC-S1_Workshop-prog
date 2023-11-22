@@ -48,6 +48,7 @@ void negatif(sil::Image image) {
     image.save("output/Negatif.png");
 
 }
+
 void degrade(sil::Image image) {
 
 }
@@ -133,7 +134,27 @@ void splitRGB(sil::Image image) {
     nouvelleImage.save("output/splitRGB.png");
 }
 
-void luminosite(sil::Image image);
+void luminosite(sil::Image image)
+{
+    sil::Image clair{image.width(), image.height()};
+    sil::Image sombre{image.width(), image.height()};
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            clair.pixel(x,y).r=pow(image.pixel(x,y).r,0.5);
+            clair.pixel(x,y).g=pow(image.pixel(x,y).g,0.5);
+            clair.pixel(x,y).b=pow(image.pixel(x,y).b,0.5);
+
+            sombre.pixel(x,y).r=pow(image.pixel(x,y).r,2.0);
+            sombre.pixel(x,y).g=pow(image.pixel(x,y).g,2.0);
+            sombre.pixel(x,y).b=pow(image.pixel(x,y).b,2.0);
+        }
+    }
+    clair.save("output/luminositeClair.png");
+    sombre.save("output/luminositeSombre.png");
+
+}
 
 void disque(int rayon) {
     sil::Image image {500, 500};

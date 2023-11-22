@@ -1,5 +1,5 @@
 #include "workshop.hpp"
-
+#include <iostream>
 
 void neGarderQueLeVert(sil::Image image) {
     for (int x{0}; x < image.width(); x++)
@@ -301,15 +301,16 @@ void fractaleMandelbrot()
 
     //std::complex<float> c{3.f, 2.f}; // Définis le nombre c = 3 + 2*i
     
-    for (int x{0}; x < image.width(); x++)
+    for (float x{0}; x < image.width(); x++)
     {
-        for (int y{0}; y < image.height(); y++)
+        for (float y{0}; y < image.height(); y++)
         {
             float a = ((x*4)/500)-2;
             float b = ((y*4)/500)-2;
-            std::complex<float> z{0};
+            //std::cout << a << "  " << b << std::endl;
+            std::complex<float> z{0.f,0.f};
             std::complex<float> c{a , b};
-            for(int i{0}; i<200; i++)
+            for(int i{0}; i<50; i++)
             {
                 z = z * z + c;
             }

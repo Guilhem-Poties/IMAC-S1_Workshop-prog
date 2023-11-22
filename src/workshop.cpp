@@ -309,14 +309,20 @@ void fractaleMandelbrot()
             //std::cout << a << "  " << b << std::endl;
             std::complex<float> z{0.f,0.f};
             std::complex<float> c{a , b};
-            for(int i{0}; i<50; i++)
+            float i{0};
+            while(i<50)
             {
                 z = z * z + c;
+
+                if (std::abs(z)>2)
+                {
+                break;
+                }
+                i++;
             }
-            if (std::abs(z)<2)
-            {
-                image.pixel(x,y) = {1, 1, 1};
-            }
+            image.pixel(x,y).r = 0.f + i/50;
+            image.pixel(x,y).g = 0.f + i/50;
+            image.pixel(x,y).b = 0.f + i/50;
         }
     }
     image.save("output/fractale.png");

@@ -112,10 +112,15 @@ void fractaleMandelbrot();
 enum forme {ciculaire, losange};
 
 void vortex(sil::Image image, forme forme = forme::losange, unsigned int intensite = 20);
+/*Fait
+Difficulté à définir l'angle de rotation par point
+*/
 
 void tramage(sil::Image image);
 
 void normalisationHistogramme(sil::Image image);
+/*Fait
+Difficulté à trouver la formule correcte de normalisation*/
 
 void convolutions(sil::Image image);
 
@@ -131,7 +136,7 @@ void filtreKuwahara(sil::Image image);
 
 void Kmeans(sil::Image image);
 
-void diamondSquare(sil::Image image);
+void diamondSquare();
 
 void heightMap(sil::Image image);
 

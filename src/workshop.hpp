@@ -32,7 +32,9 @@ Pour chacune des couleurs faire 1 - la valeur de la couleur
 
 void degrade(sil::Image image);
 
-void miroir(sil::Image image, bool horizontal);
+enum sens {horizontal, vertical};
+
+void miroir(sil::Image image, sens sens = sens::vertical);
 /*Fait
 Aucune difficulté
 Echanger tous les pixels avec leurs pixels opposés sur l'axe horizontal
@@ -54,7 +56,7 @@ Donner de nouvelles coordonnées à la nouvelle image (de dimensions inversées)
 à partir des coordonnées de l'image originelle 
 */
 
-void splitRGB(sil::Image image);
+void splitRGB(sil::Image image, int ecart = 30);
 /*Fait
 Difficultés à comprendre qu'il fallait créer une nouvelle image
 et comment décaler les pixels sans sortir du cadre
@@ -85,18 +87,18 @@ en dehors du cercle intérieur.
 
 void rosace(int rayon, int epaisseur, int centre);
 
-void mosaique(sil::Image image, int repetition);
+void mosaique(sil::Image image, int repetition = 5);
 /*Fait
 Difficulté à toruver l'emplacement correct du modulo
 Sur une une nouvelle image prend un pixel sur le nombre de répétition 
 pour le recopier et faire n^2 répetition de l'image en plus pixélisée*/
 
-void mosaiqueMiroir(sil::Image image, int repetition);
+void mosaiqueMiroir(sil::Image image, int repetition = 5);
 /*Fait
 Grande difficulté à gérer l'alternance entre les portions miroirs et le sens de leur inversion
 */
 
-void glitch(sil::Image image, int intensite);
+void glitch(sil::Image image, int intensite = 75);
 /*Fait
 Difficulté à gérer les nombreuses opérandes simultanément
 Création d'une boucle, chaque itération correspondant à un glitch, 
@@ -110,7 +112,7 @@ glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle);
 
 enum forme {ciculaire, losange};
 
-void vortex(sil::Image image, forme forme, unsigned int intensite);
+void vortex(sil::Image image, forme forme = forme::losange, unsigned int intensite = 20);
 
 void tramage(sil::Image image);
 

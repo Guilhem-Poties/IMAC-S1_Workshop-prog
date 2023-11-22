@@ -53,8 +53,8 @@ void degrade(sil::Image image) {
 
 }
 
-void miroir(sil::Image image, bool horizontal) {
-    if (horizontal)
+void miroir(sil::Image image, sens sens) {
+    if (sens == sens::horizontal)
     {
         for (int x{0}; x < image.width(); x++)
         {
@@ -108,7 +108,7 @@ void rotation90(sil::Image image) {
     //345 300
 }
 
-void splitRGB(sil::Image image) {
+void splitRGB(sil::Image image, int ecart) {
     sil::Image nouvelleImage{image.width(), image.height()};
 
     for (int x{0}; x < image.width(); x++)
@@ -116,14 +116,14 @@ void splitRGB(sil::Image image) {
         for (int y{0}; y < image.height(); y++)
         {
             glm::vec3 couleur {0,image.pixel(x,y).g, 0};
-            if (x-30 >= 0)
+            if (x-ecart >= 0)
             {
-                couleur[0] = image.pixel(x-30,y).r;
+                couleur[0] = image.pixel(x-ecart,y).r;
             }
 
-            if (x+30 < image.width())
+            if (x+ecart < image.width())
             {
-                couleur[2] = image.pixel(x+30,y).b;
+                couleur[2] = image.pixel(x+ecart,y).b;
             }
 
             nouvelleImage.pixel(x,y) = couleur;

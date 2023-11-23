@@ -393,12 +393,32 @@ void normalisationHistogramme(sil::Image image) {
 
 void convolutions(sil::Image image)
 {
-    for (float x{0}; x < image.width(); x++)
+    int taille{5};
+    
+    for (int x{0}; x < image.width(); x++)
     {
-        for (float y{0}; y < image.height(); y++)
+        for (int y{0}; y < image.height(); y++)
         {
+            if (x>taille/2 && x<image.width()-taille/2 && y>taille/2 && y<image.height()-taille/2)
+            {
+                float sommeR{};
+                float sommeG{};
+                float sommeB{};
+                for (int w{(x-taille/2)}; w < ((x-taille/2))+taille; w++)
+                {
+                    for (int h{(y-taille/2)}; h < ((y-taille/2))+taille; h++)
+                    {
+                        sommeR+= image.pixel(w,h).r;
+                        sommeG+= image.pixel(w,h).g;
+                        sommeB+= image.pixel(w,h).b;
+                    }
+                }
+                image.pixel(x,y).r = sommeR/pow(static_cast<float>(taille),2.0);
+                image.pixel(x,y).g = sommeG/pow(static_cast<float>(taille),2.0);
+                image.pixel(x,y).b = sommeB/pow(static_cast<float>(taille),2.0);
+            }
             //pixel=moyenne pixels autour
-            if (x>0 && x<image.width()-1 && y>0 && y<image.height()-1)
+           /*  if (x>0 && x<image.width()-1 && y>0 && y<image.height()-1)
             {
                 image.pixel(x,y).r = (image.pixel(x,y).r + image.pixel(x-1,y-1).r + image.pixel(x,y-1).r + 
                 image.pixel(x+1,y-1).r + image.pixel(x+1,y).r + image.pixel(x-1,y).r + image.pixel(x-1,y+1).r +
@@ -411,7 +431,7 @@ void convolutions(sil::Image image)
                 image.pixel(x,y).b = (image.pixel(x,y).b + image.pixel(x-1,y-1).b + image.pixel(x,y-1).b + 
                 image.pixel(x+1,y-1).b + image.pixel(x+1,y).b + image.pixel(x-1,y).b + image.pixel(x-1,y+1).b +
                 image.pixel(x,y+1).b + image.pixel(x+1,y+1).b)/9;
-            }
+            } */
         }
     }
     image.save("output/convolutions.png");

@@ -123,6 +123,9 @@ void normalisationHistogramme(sil::Image image);
 Difficulté à trouver la formule correcte de normalisation*/
 
 void convolutions(sil::Image image);
+/*Fait
+Difficulté à trouver les bonnes conditions des boucles
+*/
 
 void netteteContoursEtc(sil::Image image);
 

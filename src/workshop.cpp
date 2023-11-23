@@ -263,14 +263,14 @@ void mosaiqueMiroir(sil::Image image, int repetition) {
     nouvelleImage.save("output/mosaiqueMiroir.png");
 }
 
+struct position {
+    int x;
+    int y;
+};
+
 void glitch(sil::Image image, int intensite) {
     int w {};
     int h {};
-
-    struct position {
-        int x;
-        int y;
-    };
 
     position pos1 {};
     position pos2 {};
@@ -445,14 +445,41 @@ void differencesGaussiennes(sil::Image image);
 
 void triPixel(sil::Image image);
 
-void filtreKuwahara(sil::Image image);
+float moyenneLuminosite(sil::Image image) {
+    
+}
+
+float ecarType(glm::vec3, float moy, float n);
+
+void filtreKuwahara(sil::Image image) {
+    sil::Image nouvelleImage {image.width(), image.height()};
+
+    int taille{5};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            if (x>taille/2 && x<image.width()-taille/2 && y>taille/2 && y<image.height()-taille/2)
+            {
+                
+            }
+            else
+            {
+                image.pixel(x,y) = image.pixel(x,y);
+            }
+            
+        }
+    }
+    
+}
 
 void Kmeans(sil::Image image);
 
 void diamondSquare() {
-    int sizeImage = pow(2, 8) + 1;
+    int sizeImage = pow(2, 11) + 1;
     int sizeChunk {sizeImage - 1};
-    float roughness {0.5f};
+    float roughness {0.4f};
 
     sil::Image image {sizeImage, sizeImage};
 
@@ -460,7 +487,6 @@ void diamondSquare() {
     image.pixel(sizeImage-1,0) =  glm::vec3{random_float(0.00f, 1.00f)};
     image.pixel(0,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
     image.pixel(sizeImage-1,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
-
 
     while (sizeChunk > 1)
     {

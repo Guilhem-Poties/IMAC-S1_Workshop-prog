@@ -135,6 +135,10 @@ void differencesGaussiennes(sil::Image image);
 
 void triPixel(sil::Image image);
 
+float moyenneLuminosite(glm::vec3 pixel);
+
+float ecarType(glm::vec3, float moy, float n);
+
 void filtreKuwahara(sil::Image image);
 
 void Kmeans(sil::Image image);

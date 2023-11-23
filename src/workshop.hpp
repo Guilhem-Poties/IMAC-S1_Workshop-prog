@@ -133,6 +133,8 @@ void filtresSeparables(sil::Image image);
 
 void differencesGaussiennes(sil::Image image);
 
+float brightness(glm::vec3 v);
+
 void triPixel(sil::Image image);
 
 float moyenneLuminosite(glm::vec3 pixel);

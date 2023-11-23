@@ -443,43 +443,48 @@ void filtresSeparables(sil::Image image);
 
 void differencesGaussiennes(sil::Image image);
 
-void triPixel(sil::Image image);
-
-float moyenneLuminosite(sil::Image image) {
-    
+float brightness(glm::vec3 v)
+{
+    return (v.r+v.g+v.b)/3;
 }
 
-float ecarType(glm::vec3, float moy, float n);
-
-void filtreKuwahara(sil::Image image) {
-    sil::Image nouvelleImage {image.width(), image.height()};
-
-    int taille{5};
-
+void triPixel(sil::Image image)
+{
+    sil::Image nouvelleImage{image.width(), image.height()};
+    std::vector<glm::vec3> v{};
     for (int x{0}; x < image.width(); x++)
     {
         for (int y{0}; y < image.height(); y++)
         {
-            if (x>taille/2 && x<image.width()-taille/2 && y>taille/2 && y<image.height()-taille/2)
-            {
-                
-            }
-            else
-            {
-                image.pixel(x,y) = image.pixel(x,y);
-            }
-            
+            v.push_back(image.pixel(x,y));
+        }
+    } 
+    std::sort(v.begin(), v.end(), [](glm::vec3 const& color1, glm::vec3 const& color2)
+    {
+        return brightness(color1) < brightness(color2); // Trie selon la luminosité des couleurs (NB : c'est à vous de coder la fonction `brightness`)
+    });
+    int i{0};
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            nouvelleImage.pixel(x,y) = v[i];
+            i++;
         }
     }
     
+    nouvelleImage.save("output/triPixel.png");
+    
 }
+
+void filtreKuwahara(sil::Image image);
 
 void Kmeans(sil::Image image);
 
 void diamondSquare() {
-    int sizeImage = pow(2, 11) + 1;
+    int sizeImage = pow(2, 8) + 1;
     int sizeChunk {sizeImage - 1};
-    float roughness {0.4f};
+    float roughness {0.5f};
 
     sil::Image image {sizeImage, sizeImage};
 
@@ -487,6 +492,7 @@ void diamondSquare() {
     image.pixel(sizeImage-1,0) =  glm::vec3{random_float(0.00f, 1.00f)};
     image.pixel(0,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
     image.pixel(sizeImage-1,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
+
 
     while (sizeChunk > 1)
     {

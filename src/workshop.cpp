@@ -430,9 +430,9 @@ void filtreKuwahara(sil::Image image);
 void Kmeans(sil::Image image);
 
 void diamondSquare() {
-    int sizeImage = pow(2, 10) + 1;
+    int sizeImage = pow(2, 4) + 1;
     int sizeChunk = sizeImage - 1;
-    int roughness = 0.1f;
+    int roughness = 0.2f;
 
     sil::Image image = {sizeImage, sizeImage};
 
@@ -446,48 +446,51 @@ void diamondSquare() {
 
     while (sizeChunk > 1)
     {
+        int halfChunk = sizeChunk/2;
+
         //saquare step
         for (int x = 0; x < sizeImage-2; x += sizeChunk)
         {
             for (int y = 0; y < sizeImage-2; y += sizeChunk)
             {
-                image.pixel(x + sizeChunk/2, y + sizeChunk/2) = (
+                image.pixel(x + halfChunk, y + halfChunk) = ((
                     image.pixel(0,0) + image.pixel(sizeChunk,0) +
                     image.pixel(0,sizeChunk) + image.pixel(sizeChunk,sizeChunk)) 
-                    / glm::vec3 {4} + glm::vec3 {random_float(-roughness, roughness)};
+                    / glm::vec3 {4}) + glm::vec3 {random_float(-roughness, roughness)};
             }
             
         }
         
-        for (int x = 0; x < sizeImage-1; x += sizeChunk/2)
+        //diamond step
+        for (int x = 0; x < image.width(); x += halfChunk)
         {
-            for (int y = (y + sizeChunk/2) % sizeChunk; y < sizeImage-1; y += sizeChunk)
+            for (int y = (y + halfChunk) % sizeChunk; y < image.height(); y += sizeChunk)
             {
                 if (x > 0)
                 {
-                    tempPixel += image.pixel(x-sizeChunk/2, y);
+                    tempPixel += image.pixel(x-halfChunk, y);
                     count++;
                 }
-                if (x < sizeImage-1)
+                if (x < image.width()-1)
                 {
-                    tempPixel += image.pixel(x+sizeChunk/2, y);
+                    tempPixel += image.pixel(x+halfChunk, y);
                     count++;
                 }
                 if (y > 0)
                 {
-                    tempPixel += image.pixel(x, y-sizeChunk/2);
+                    tempPixel += image.pixel(x, y-halfChunk);
                     count++;
                 }
-                if (y < sizeImage-1)
+                if (y < image.height()-1)
                 {
-                    tempPixel += image.pixel(x, y+sizeChunk/2);
+                    tempPixel += image.pixel(x, y+halfChunk);
                     count++;
                 }
 
-                image.pixel(x, y) = tempPixel / glm::vec3 {count} + glm::vec3 {random_float(-roughness, roughness)};
+                image.pixel(x, y) = (tempPixel / glm::vec3 {count}) + glm::vec3 {random_float(-roughness, roughness)};
 
-                glm::vec3 tempPixel {glm::vec3 {0}};
-                int count {0};
+                glm::vec3 tempPixel = {glm::vec3 {0}};
+                int count = {0};
             }
             
         }

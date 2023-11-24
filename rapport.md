@@ -84,3 +84,45 @@ Résultat :
 ![image](./output/imageBruitee.png)
 </br>
 </br>
+
+###Rotation à 90° ★★
+
+Nous avons eu du mal à comprendre qu'il fallait créer une nouvelle image et à comprendre le mécanisme à utiliser pour retourner les pixels (réalisation d'une symétrie avant réussite).
+On a aussi dû faire attention à ajouter un -1 pour ne pas dépasser le cadre.
+On a donc donner de nouvelles coordonnées à la nouvelle image (qui a des dimensions inversées) à partir des coordonnées de l'image de départ. 
+
+Résultat : 
+![image](./output/rotation.png)
+</br>
+</br>
+
+###Split RGB ★★
+
+Nous avons eu des difficultés à comprendre qu'il fallait créer une nouvelle image et comment décaler les pixels sans sortir du cadre.
+Dans notre code, chaque pixel sur la nouvelle image regarde, s'il le peut, le rouge sur un pixel qui le précède, le bleu sur un qui le devance et le vert à ses coordonnées actuelles.
+
+Résultat : 
+![image](./output/splitRGB.png)
+</br>
+</br>
+
+###Luminosité ★★
+
+Nous avons eu des difficultés à comprendre sur quoi appliquer la puissance.
+On créé deux nouvelles images: sur une on applique une puissance 1/2 sur les paramètre rgb de l'image de départ pour l'éclaicir et sur l'autre une puissance 2 pour l'assombrir.
+
+Résultat : 
+![image](./output/luminositeClair.png)
+![image](./output/luminositeSombre.png)
+</br>
+</br>
+
+###Disque ★★
+
+Nous avons eu du mal à trouver la bonne formule pour le cercle.
+On colore en blanc les pixels se trouvant à l'intérieur du cercle de rayon r.
+
+Résultat : 
+![image](./output/disque.png)
+</br>
+</br>

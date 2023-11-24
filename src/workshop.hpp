@@ -137,9 +137,9 @@ float brightness(glm::vec3 v);
 
 void triPixel(sil::Image image);
 
-float moyenneLuminosite(glm::vec3 pixel);
+glm::vec3 moyenneLuminosite(std::vector<glm::vec3> ensembleCouleurs);
 
-float ecarType(glm::vec3, float moy, float n);
+float ecarType(std::vector<glm::vec3> ensembleCouleurs);
 
 void filtreKuwahara(sil::Image image);
 
@@ -147,7 +147,7 @@ void Kmeans(sil::Image image);
 
 void diamondSquare();
 
-void heightMap(sil::Image image);
+void heightMap();
 
 
 //Bonus

@@ -1,5 +1,6 @@
 #include "workshop.hpp"
 #include <iostream>
+#include <algorithm>
 
 void neGarderQueLeVert(sil::Image image) {
     for (int x{0}; x < image.width(); x++)
@@ -21,7 +22,7 @@ void echangerLesCanaux(sil::Image image) {
             std::swap(image.pixel(x, y).r, image.pixel(x, y).b);
         }
     }
-    image.save("output/EchangerLesCanaux.png");
+    image.save("output/echangerLesCanaux.png");
 
 }
 
@@ -443,7 +444,7 @@ void filtresSeparables(sil::Image image);
 
 void differencesGaussiennes(sil::Image image);
 
-float brightness(glm::vec3 v)
+float brightness(glm::vec3 v) 
 {
     return (v.r+v.g+v.b)/3;
 }
@@ -489,14 +490,98 @@ void triPixel(sil::Image image)
     
 }
 
-void filtreKuwahara(sil::Image image);
+glm::vec3 moyenneLuminosite(std::vector<glm::vec3> ensembleCouleurs) {
+    glm::vec3 somme {};
+
+    for (int i = 0; i < ensembleCouleurs.size(); i++)
+    {
+        somme += ensembleCouleurs[i];
+    }
+    return somme/glm::vec3 {ensembleCouleurs.size()};
+}
+
+float ecarType(std::vector<glm::vec3> ensembleCouleurs) {
+    float somme {};
+    float moyenne = brightness(moyenneLuminosite(ensembleCouleurs));
+
+    for (int i = 0; i < ensembleCouleurs.size(); i++)
+    {
+        float couleur = brightness(ensembleCouleurs[i]);
+        somme = pow((couleur - moyenne), 2.0);
+    }
+    return somme/ensembleCouleurs.size();
+}
+
+void filtreKuwahara(sil::Image image) {
+    sil::Image nouvelleImage {image.width(), image.height()};
+
+    int taille{5};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            float minEcartType {};
+            glm::vec3 minLuminosite {};
+            if (x>taille/2 && x<image.width()-taille/2 && y>taille/2 && y<image.height()-taille/2)
+            {
+                for (int i {0}; i < 4; i++)
+                {
+                    std::vector<glm::vec3> ensembleCouleurs {};
+                    int x2 {}, y2 {};
+
+                    switch (i)
+                    {
+                    case 0:
+                        x2 = x - (taille/2);
+                        y2 = y - (taille/2);
+                        break;
+                    case 1:
+                        x2 = x + (taille/2);
+                        y2 = y - (taille/2);
+                        break;
+                    case 2:
+                        x2 = x - (taille/2);
+                        y2 = y + (taille/2);
+                        break;
+                    case 3:
+                        x2 = x + (taille/2);
+                        y2 = y + (taille/2);
+                        break;                    
+                    }
+
+                    for (int j {std::min(x, x2)}; j <= std::max(x, x2); j++)
+                    {
+                        for (int k = std::min(y, y2); k <= std::max(y, y2); k++)
+                        {
+                            glm::vec3 couleur = image.pixel(j,k);
+                            ensembleCouleurs.push_back(couleur);
+                        }
+                    }
+                    if (std::min(minEcartType, ecarType(ensembleCouleurs)) != minEcartType)
+                    {
+                        minEcartType = ecarType(ensembleCouleurs);
+                        minLuminosite = moyenneLuminosite(ensembleCouleurs);
+                    }
+                }
+                nouvelleImage.pixel(x,y) = minLuminosite;
+            }
+            else
+            {
+                nouvelleImage.pixel(x,y) = image.pixel(x,y);
+            }
+            
+        }
+    }
+    nouvelleImage.save("output/filtreKuwahara.png");
+}
 
 void Kmeans(sil::Image image);
 
 void diamondSquare() {
-    int sizeImage = pow(2, 8) + 1;
+    int sizeImage = pow(2, 10) + 1;
     int sizeChunk {sizeImage - 1};
-    float roughness {0.5f};
+    float roughness {0.3f};
 
     sil::Image image {sizeImage, sizeImage};
 
@@ -560,10 +645,93 @@ void diamondSquare() {
         roughness /= 2;
         sizeChunk /= 2;
     }
-        image.save("output/diamondSquare.png");
+    image.save("output/diamondSquare.png");
 }
 
-void heightMap(sil::Image image);
+void heightMap() {
+    int sizeImage = pow(2, 8) + 1;
+    int sizeChunk {sizeImage - 1};
+    float roughness {0.4f};
+
+    sil::Image image {sizeImage, sizeImage};
+
+    image.pixel(0,0) = glm::vec3{random_float(0.00f, 1.00f)};
+    image.pixel(sizeImage-1,0) =  glm::vec3{random_float(0.00f, 1.00f)};
+    image.pixel(0,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
+    image.pixel(sizeImage-1,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
+
+    while (sizeChunk > 1)
+    {
+        int halfChunk = sizeChunk/2;
+
+        //saquare step
+        for (int x = 0; x < sizeImage-1; x += sizeChunk)
+        {
+            for (int y = 0; y < sizeImage-1; y += sizeChunk)
+            {
+                image.pixel(x + halfChunk, y + halfChunk) = ((
+                    image.pixel(x,y) + image.pixel(x+sizeChunk,y) +
+                    image.pixel(x,y+sizeChunk) + image.pixel(x+sizeChunk,y+sizeChunk)) 
+                    / glm::vec3 {4}) + glm::vec3 {random_float(-roughness, roughness)};
+            }           
+        }
+        
+        //diamond step
+        for (int x = 0; x < sizeImage; x += halfChunk)
+        {
+            for (int y = (x + halfChunk) % sizeChunk; y < sizeImage; y += sizeChunk)
+            {
+                glm::vec3 tempPixel {glm::vec3 {0}};
+                float count {0};
+
+                if (x-halfChunk >= 0)
+                {
+                    tempPixel += image.pixel(x-halfChunk, y);
+                    count++;
+                }
+                if (x+halfChunk < image.width())
+                {
+                    tempPixel += image.pixel(x+halfChunk, y);
+                    count++;
+                }
+                if (y-halfChunk >= 0)
+                {
+                    tempPixel += image.pixel(x, y-halfChunk);
+                    count++;
+                }
+                if (y+halfChunk < image.height())
+                {
+                    tempPixel += image.pixel(x, y+halfChunk);
+                    count++;
+                }
+
+                image.pixel(x, y) = (tempPixel / glm::vec3 {count}) + glm::vec3 {random_float(-roughness, roughness)};
+            }
+            
+        }
+
+        for (int x = 0; x < image.width(); x++)
+        {
+            for (int y = 0; y < image.height(); y++)
+            {
+                if (image.pixel(x, y).b < 0.5f)
+                {
+                    //image.pixel(x, y) = glm::vec3 {0,0,1};
+                    image.pixel(x, y) = glm::mix(glm::vec3 {0,0,0.2f}, glm::vec3 {0,0,1}, (image.pixel(x,y).b)*2);
+                }
+                else
+                {
+                    image.pixel(x, y) = glm::mix(glm::vec3 {0.2,0.4,0}, glm::vec3 {0,0,1}, (image.pixel(x,y).b)+(0.5/2));
+                }
+                
+            }           
+        }
+
+        roughness /= 2;
+        sizeChunk /= 2;
+    }
+    image.save("output/heightMap.png");
+}
 
 
 //Bonus

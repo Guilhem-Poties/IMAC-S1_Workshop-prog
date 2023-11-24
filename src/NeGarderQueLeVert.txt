@@ -14,4 +14,92 @@ int main()
     }
 
     image.save("output/neGarderQueLeVert.png");
+}glm::vec3 moyenneLuminosite(std::vector<glm::vec3> ensembleCouleurs) {
+    glm::vec3 somme {};
+
+    for (int i = 0; i < ensembleCouleurs.size(); i++)
+    {
+        somme += ensembleCouleurs[i];
+    }
+    return somme/glm::vec3 {ensembleCouleurs.size()};
+}
+
+float moyenneVecteur(glm::vec3 vecteur) {
+    return vecteur[0] + vecteur[1] + vecteur[2];
+}
+
+float ecarType(std::vector<glm::vec3> ensembleCouleurs) {
+    float somme {};
+    float moyenne = moyenneVecteur(moyenneLuminosite(ensembleCouleurs));
+
+    for (int i = 0; i < ensembleCouleurs.size(); i++)
+    {
+        float couleur = moyenneVecteur(ensembleCouleurs[i]);
+        somme = pow((couleur - moyenne), 2.0);
+    }
+    return somme/ensembleCouleurs.size();
+}
+
+void filtreKuwahara(sil::Image image) {
+    sil::Image nouvelleImage {image.width(), image.height()};
+
+    int taille{5};
+
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            float minEcartType {};
+            glm::vec3 minLuminosite {};
+            if (x>taille/2 && x<image.width()-taille/2 && y>taille/2 && y<image.height()-taille/2)
+            {
+                for (int i {0}; i < 4; i++)
+                {
+                    std::vector<glm::vec3> ensembleCouleurs {};
+                    int x2 {}, y2 {};
+
+                    switch (i)
+                    {
+                    case 0:
+                        x2 = x - (taille/2);
+                        y2 = y - (taille/2);
+                        break;
+                    case 1:
+                        x2 = x + (taille/2);
+                        y2 = y - (taille/2);
+                        break;
+                    case 2:
+                        x2 = x - (taille/2);
+                        y2 = y + (taille/2);
+                        break;
+                    case 3:
+                        x2 = x + (taille/2);
+                        y2 = y + (taille/2);
+                        break;                    
+                    }
+
+                    for (int j {std::min(x, x2)}; j <= std::max(x, x2); j++)
+                    {
+                        for (int k = std::min(y, y2); k <= std::max(y, y2); k++)
+                        {
+                            glm::vec3 couleur = image.pixel(j,k);
+                            ensembleCouleurs.push_back(couleur);
+                        }
+                    }
+                    if (std::min(minEcartType, ecarType(ensembleCouleurs)) != minEcartType)
+                    {
+                        minEcartType = ecarType(ensembleCouleurs);
+                        minLuminosite = moyenneLuminosite(ensembleCouleurs);
+                    }
+                }
+                nouvelleImage.pixel(x,y) = minLuminosite;
+            }
+            else
+            {
+                nouvelleImage.pixel(x,y) = image.pixel(x,y);
+            }
+            
+        }
+    }
+    nouvelleImage.save("output/filtreKuwahara.png");
 }

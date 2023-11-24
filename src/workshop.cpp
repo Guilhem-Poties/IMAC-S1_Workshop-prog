@@ -654,9 +654,9 @@ void diamondSquare() {
 }
 
 void heightMap() {
-    int sizeImage = pow(2, 5) + 1;
+    int sizeImage = pow(2, 6) + 1;
     int sizeChunk {sizeImage - 1};
-    float roughness {0.2f};
+    float roughness {0.3f};
 
     sil::Image image {sizeImage, sizeImage};
 
@@ -730,7 +730,7 @@ void heightMap() {
             }
             else
             {
-                image.pixel(x, y) = glm::mix(glm::vec3 {0.1,0.3,0.05}, glm::vec3 {0.8,1,0.4}, (image.pixel(x,y).b)/0.5);
+                image.pixel(x, y) = glm::mix(glm::vec3 {0.3,0.9,0.2}, glm::vec3 {0.1,0.5,0.05}, (image.pixel(x,y).b)/0.5);
             }
             
         }           

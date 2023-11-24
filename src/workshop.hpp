@@ -147,7 +147,7 @@ void filtreKuwahara(sil::Image image, int taille = 5);
 
 void Kmeans(sil::Image image);
 
-void diamondSquare();
+sil::Image diamondSquare();
 
 void heightMap();
 

@@ -583,7 +583,7 @@ void filtreKuwahara(sil::Image image, int taille) {
 
 void Kmeans(sil::Image image);
 
-void diamondSquare() {
+sil::Image diamondSquare() {
     int sizeImage = pow(2, 10) + 1;
     int sizeChunk {sizeImage - 1};
     float roughness {0.3f};
@@ -651,73 +651,11 @@ void diamondSquare() {
         sizeChunk /= 2;
     }
     image.save("output/diamondSquare.png");
+    return image;
 }
 
 void heightMap() {
-    int sizeImage = pow(2, 6) + 1;
-    int sizeChunk {sizeImage - 1};
-    float roughness {0.3f};
-
-    sil::Image image {sizeImage, sizeImage};
-
-    image.pixel(0,0) = glm::vec3{random_float(0.00f, 1.00f)};
-    image.pixel(sizeImage-1,0) =  glm::vec3{random_float(0.00f, 1.00f)};
-    image.pixel(0,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
-    image.pixel(sizeImage-1,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
-
-    while (sizeChunk > 1)
-    {
-        int halfChunk = sizeChunk/2;
-
-        //saquare step
-        for (int x = 0; x < sizeImage-1; x += sizeChunk)
-        {
-            for (int y = 0; y < sizeImage-1; y += sizeChunk)
-            {
-                image.pixel(x + halfChunk, y + halfChunk) = ((
-                    image.pixel(x,y) + image.pixel(x+sizeChunk,y) +
-                    image.pixel(x,y+sizeChunk) + image.pixel(x+sizeChunk,y+sizeChunk)) 
-                    / glm::vec3 {4}) + glm::vec3 {random_float(-roughness, roughness)};
-            }           
-        }
-        
-        //diamond step
-        for (int x = 0; x < sizeImage; x += halfChunk)
-        {
-            for (int y = (x + halfChunk) % sizeChunk; y < sizeImage; y += sizeChunk)
-            {
-                glm::vec3 tempPixel {glm::vec3 {0}};
-                float count {0};
-
-                if (x-halfChunk >= 0)
-                {
-                    tempPixel += image.pixel(x-halfChunk, y);
-                    count++;
-                }
-                if (x+halfChunk < image.width())
-                {
-                    tempPixel += image.pixel(x+halfChunk, y);
-                    count++;
-                }
-                if (y-halfChunk >= 0)
-                {
-                    tempPixel += image.pixel(x, y-halfChunk);
-                    count++;
-                }
-                if (y+halfChunk < image.height())
-                {
-                    tempPixel += image.pixel(x, y+halfChunk);
-                    count++;
-                }
-
-                image.pixel(x, y) = (tempPixel / glm::vec3 {count}) + glm::vec3 {random_float(-roughness, roughness)};
-            }
-            
-        }
-
-        roughness /= 2;
-        sizeChunk /= 2;
-    }
+    sil::Image image = diamondSquare();
 
     for (int x = 0; x < image.width(); x++)
     {

@@ -5,52 +5,28 @@
 <br/>
 
 ###Ne garder que le vert ★
-<details><summary>Code complet</summary>
-```cpp
-void neGarderQueLeVert(sil::Image image) {
-    for (int x{0}; x < image.width(); x++)
-    {
-        for (int y{0}; y < image.height(); y++)
-        {
-            image.pixel(x, y).r = 0.f;
-            image.pixel(x, y).b = 0.f;
-        }
-    }
-    image.save("output/neGarderQueLeVert.png");
-}
-```
-</details>
 </br>
+
 Nous n'avons rencontré aucune difficulté pour ce code.</br>
 Pour implémenter cet effet, nous avons mis les canaux bleu et rouge à 0.
-</br>
 </br>
 
 Résultat : 
 ![image](./output/neGarderQueLeVert.png)
+
 </br>
 </br>
 
 ###Echanger les canaux ★
-<details><summary>Code complet</summary>
+<details><summary>Code swap</summary>
 
 ```cpp
-void neGarderQueLeVert(sil::Image image) {
-    for (int x{0}; x < image.width(); x++)
-    {
-        for (int y{0}; y < image.height(); y++)
-        {
-            image.pixel(x, y).r = 0.f;
-            image.pixel(x, y).b = 0.f;
-        }
-    }
-    image.save("output/neGarderQueLeVert.png");
-}
+std::swap(image.pixel(x, y).r, image.pixel(x, y).b);
 ```
 </details>
 </br>
 Nous n'avons rencontré aucune difficulté après avoir lu l'indice indiquant d'utiliser la fonction swap</br>
-Pour implémenter cet effet, nous avons échanger les couleurs rouges et bleux.
+Pour implémenter cet effet, nous avons échanger les couleurs rouge et bleue.
 </br>
 </br>
 

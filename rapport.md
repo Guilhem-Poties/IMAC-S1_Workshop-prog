@@ -126,3 +126,25 @@ Résultat :
 ![image](./output/disque.png)
 </br>
 </br>
+
+###Cercle ★
+
+Nous n'avons pas rencontré de difficulté une fois le disque trouvé.
+On a rajouté une condition au code du disque pour colorer les pixels dans le cercle extérieur mais en dehors du cercle intérieur.
+
+Résultat : 
+![image](./output/cercle.png)
+</br>
+</br>
+
+###Mosaïque ★★
+
+Nous avons eu du mal à trouver l'emplacement correct du modulo.
+Sur une nouvelle image, on prend un pixel sur le nombre de répétition (modulo) pour le recopier et faire n^2 répetitions de l'image en plus pixélisée.
+
+Résultat : 
+![image](./output/mosaique.png)
+</br>
+</br>
+
+###Mosaïque miroir ★★★

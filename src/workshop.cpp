@@ -1,6 +1,4 @@
 #include "workshop.hpp"
-#include <iostream>
-#include <algorithm>
 
 void neGarderQueLeVert(sil::Image image) {
     for (int x{0}; x < image.width(); x++)
@@ -505,7 +503,8 @@ glm::vec3 moyenneLuminosite(std::vector<glm::vec3> ensembleCouleurs) {
     {
         somme += ensembleCouleurs[i];
     }
-    return somme/glm::vec3 {ensembleCouleurs.size()};
+    float taille = ensembleCouleurs.size();
+    return somme/glm::vec3 {taille};
 }
 
 float ecarType(std::vector<glm::vec3> ensembleCouleurs) {
@@ -520,11 +519,9 @@ float ecarType(std::vector<glm::vec3> ensembleCouleurs) {
     return somme/ensembleCouleurs.size();
 }
 
-void filtreKuwahara(sil::Image image) {
+void filtreKuwahara(sil::Image image, int taille) {
     sil::Image nouvelleImage {image.width(), image.height()};
-
-    int taille{5};
-
+    
     for (int x{0}; x < image.width(); x++)
     {
         for (int y{0}; y < image.height(); y++)
@@ -657,9 +654,9 @@ void diamondSquare() {
 }
 
 void heightMap() {
-    int sizeImage = pow(2, 8) + 1;
+    int sizeImage = pow(2, 5) + 1;
     int sizeChunk {sizeImage - 1};
-    float roughness {0.4f};
+    float roughness {0.2f};
 
     sil::Image image {sizeImage, sizeImage};
 
@@ -718,25 +715,25 @@ void heightMap() {
             
         }
 
-        for (int x = 0; x < image.width(); x++)
-        {
-            for (int y = 0; y < image.height(); y++)
-            {
-                if (image.pixel(x, y).b < 0.5f)
-                {
-                    //image.pixel(x, y) = glm::vec3 {0,0,1};
-                    image.pixel(x, y) = glm::mix(glm::vec3 {0,0,0.2f}, glm::vec3 {0,0,1}, (image.pixel(x,y).b)*2);
-                }
-                else
-                {
-                    image.pixel(x, y) = glm::mix(glm::vec3 {0.2,0.4,0}, glm::vec3 {0,0,1}, (image.pixel(x,y).b)+(0.5/2));
-                }
-                
-            }           
-        }
-
         roughness /= 2;
         sizeChunk /= 2;
+    }
+
+    for (int x = 0; x < image.width(); x++)
+    {
+        for (int y = 0; y < image.height(); y++)
+        {
+            if (image.pixel(x, y).b <= 0.5f)
+            {
+                //image.pixel(x, y) = glm::vec3 {0,0,1};
+                image.pixel(x, y) = glm::mix(glm::vec3 {0,0,0.2f}, glm::vec3 {0,0,1}, (image.pixel(x,y).b)/0.5);
+            }
+            else
+            {
+                image.pixel(x, y) = glm::mix(glm::vec3 {0.1,0.3,0.05}, glm::vec3 {0.8,1,0.4}, (image.pixel(x,y).b)/0.5);
+            }
+            
+        }           
     }
     image.save("output/heightMap.png");
 }

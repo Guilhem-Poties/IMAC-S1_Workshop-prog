@@ -5,6 +5,8 @@
 #include <math.h>
 #include <complex>
 #include <glm/gtx/matrix_transform_2d.hpp>
+#include <iostream>
+#include <algorithm>
 
 
 void neGarderQueLeVert(sil::Image image);
@@ -141,7 +143,7 @@ glm::vec3 moyenneLuminosite(std::vector<glm::vec3> ensembleCouleurs);
 
 float ecarType(std::vector<glm::vec3> ensembleCouleurs);
 
-void filtreKuwahara(sil::Image image);
+void filtreKuwahara(sil::Image image, int taille = 5);
 
 void Kmeans(sil::Image image);
 

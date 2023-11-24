@@ -50,8 +50,16 @@ void negatif(sil::Image image) {
 
 }
 
-void degrade(sil::Image image) {
-
+void degrade() {
+    sil::Image image{300 /*width*/, 200 /*height*/}; // Creates a black image with the given size.
+    for (int x{0}; x < image.width(); ++x)
+    {
+        for (int y{0}; y < image.height(); ++y)
+        {
+            image.pixel(x, y) = glm::vec3{static_cast<float>(x) / static_cast<float>(image.width() - 1)};
+        }
+    }
+    image.save("output/degrade.png");
 }
 
 void miroir(sil::Image image, sens sens) {
@@ -521,7 +529,7 @@ void filtreKuwahara(sil::Image image) {
     {
         for (int y{0}; y < image.height(); y++)
         {
-            float minEcartType {};
+            float minEcartType {1};
             glm::vec3 minLuminosite {};
             if (x>taille/2 && x<image.width()-taille/2 && y>taille/2 && y<image.height()-taille/2)
             {

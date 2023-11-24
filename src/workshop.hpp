@@ -31,7 +31,7 @@ Aucune difficulté une fois la formule du noir et blanc saisie
 Pour chacune des couleurs faire 1 - la valeur de la couleur
 */
 
-void degrade(sil::Image image);
+void degrade();
 
 enum sens {horizontal, vertical};
 

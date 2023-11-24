@@ -450,30 +450,42 @@ float brightness(glm::vec3 v)
 
 void triPixel(sil::Image image)
 {
-    sil::Image nouvelleImage{image.width(), image.height()};
-    std::vector<glm::vec3> v{};
-    for (int x{0}; x < image.width(); x++)
+    //sil::Image nouvelleImage{image.width(), image.height()};
+    
+
+    int const h {1};
+
+     for (int _{0}; _ < 100; _++)
     {
-        for (int y{0}; y < image.height(); y++)
+        std::vector<glm::vec3> v{};
+        int w = random_int(15, 100);
+
+       position pos = {random_int(0,image.width()-(w+1)), random_int(0,image.height()-(h+1))};
+
+        for (int x{0}; x < w; x++)
         {
-            v.push_back(image.pixel(x,y));
+            for (int y{0}; y < h; y++)
+            {
+                v.push_back(image.pixel(pos.x+x,pos.y+y));
+            }
         }
-    } 
-    std::sort(v.begin(), v.end(), [](glm::vec3 const& color1, glm::vec3 const& color2)
-    {
-        return brightness(color1) < brightness(color2); // Trie selon la luminosité des couleurs (NB : c'est à vous de coder la fonction `brightness`)
-    });
-    int i{0};
-    for (int x{0}; x < image.width(); x++)
-    {
-        for (int y{0}; y < image.height(); y++)
+        std::sort(v.begin(), v.end(), [](glm::vec3 const& color1, glm::vec3 const& color2)
         {
-            nouvelleImage.pixel(x,y) = v[i];
-            i++;
+            return brightness(color1) < brightness(color2); // Trie selon la luminosité des couleurs (NB : c'est à vous de coder la fonction `brightness`)
+        });
+
+        int i{0};
+        for (int x{0}; x < w; x++)
+        {
+            for (int y{0}; y < h; y++)
+            {
+                image.pixel(pos.x+x,pos.y+y) = v[i];
+                i++;
+            }
         }
     }
     
-    nouvelleImage.save("output/triPixel.png");
+    image.save("output/triPixel.png");
     
 }
 

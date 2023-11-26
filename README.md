@@ -200,3 +200,24 @@ Nous avons trouvé difficile ai début le fonctionnement de sort puis nous avons
 Résultat : 
 ![image](./output/triPixel.png)
 
+###Filtre de Kuwahara ★★★★★
+
+
+
+Résultat : 
+![image](./output/filtreKuwahara.png)
+
+###Diamond Square ★★★★★★
+
+
+Résultat : 
+![image](./output/diamondSquare.png)
+
+###Height Map ★★
+
+
+Résultat : 
+![image](./output/heightMap.png)
+
+##Effets Bonus / custom
+

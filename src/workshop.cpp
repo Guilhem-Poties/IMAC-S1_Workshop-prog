@@ -584,12 +584,14 @@ void filtreKuwahara(sil::Image image, int taille) {
 void Kmeans(sil::Image image);
 
 sil::Image diamondSquare() {
+
     int sizeImage = pow(2, 10) + 1;
     int sizeChunk {sizeImage - 1};
-    float roughness {0.3f};
+    float roughness {0.4f};
 
     sil::Image image {sizeImage, sizeImage};
 
+    //Initialisation des pixels de départ
     image.pixel(0,0) = glm::vec3{random_float(0.00f, 1.00f)};
     image.pixel(sizeImage-1,0) =  glm::vec3{random_float(0.00f, 1.00f)};
     image.pixel(0,sizeImage-1) =  glm::vec3{random_float(0.00f, 1.00f)};
@@ -600,20 +602,21 @@ sil::Image diamondSquare() {
     {
         int halfChunk = sizeChunk/2;
 
-        //saquare step
+        //Etape carré
         for (int x = 0; x < sizeImage-1; x += sizeChunk)
         {
             for (int y = 0; y < sizeImage-1; y += sizeChunk)
             {
-                image.pixel(x + halfChunk, y + halfChunk) = ((
+                //Modification du pixel
+                image.pixel(x+halfChunk, y+halfChunk) = ((
                     image.pixel(x,y) + image.pixel(x+sizeChunk,y) +
-                    image.pixel(x,y+sizeChunk) + image.pixel(x+sizeChunk,y+sizeChunk)) 
+                    image.pixel(x,y+sizeChunk) + image.pixel(x+sizeChunk, y+sizeChunk)) 
                     / glm::vec3 {4}) + glm::vec3 {random_float(-roughness, roughness)};
             }
             
         }
         
-        //diamond step
+        //Etape diamant
         for (int x = 0; x < sizeImage; x += halfChunk)
         {
             for (int y = (x + halfChunk) % sizeChunk; y < sizeImage; y += sizeChunk)
@@ -621,32 +624,37 @@ sil::Image diamondSquare() {
                 glm::vec3 tempPixel {glm::vec3 {0}};
                 float count {0};
 
+                //Vérification du côté droit
                 if (x-halfChunk >= 0)
                 {
                     tempPixel += image.pixel(x-halfChunk, y);
                     count++;
                 }
+
+                //Vérification du côté gauche
                 if (x+halfChunk < image.width())
                 {
                     tempPixel += image.pixel(x+halfChunk, y);
                     count++;
                 }
+
+                //Vérification du côté suppérieur
                 if (y-halfChunk >= 0)
                 {
                     tempPixel += image.pixel(x, y-halfChunk);
                     count++;
                 }
+
+                //Vérification du côté inférieur
                 if (y+halfChunk < image.height())
                 {
                     tempPixel += image.pixel(x, y+halfChunk);
                     count++;
                 }
-
+                //Modification du pixel
                 image.pixel(x, y) = (tempPixel / glm::vec3 {count}) + glm::vec3 {random_float(-roughness, roughness)};
             }
-            
         }
-
         roughness /= 2;
         sizeChunk /= 2;
     }
@@ -661,16 +669,19 @@ void heightMap() {
     {
         for (int y = 0; y < image.height(); y++)
         {
+            float temp = {};
+            int ratio = temp;
+            float pourcentage = ratio/10/0.5;
+
             if (image.pixel(x, y).b <= 0.5f)
             {
                 //image.pixel(x, y) = glm::vec3 {0,0,1};
-                image.pixel(x, y) = glm::mix(glm::vec3 {0,0,0.2f}, glm::vec3 {0,0,1}, (image.pixel(x,y).b)/0.5);
+                image.pixel(x, y) = glm::mix(glm::vec3 {0,0,0.2}, glm::vec3 {0,0,0.8}, roundf(image.pixel(x,y).b*10)/5) + glm::vec3 {0.1};
             }
             else
             {
-                image.pixel(x, y) = glm::mix(glm::vec3 {0.3,0.9,0.2}, glm::vec3 {0.1,0.5,0.05}, (image.pixel(x,y).b)/0.5);
+                image.pixel(x, y) = glm::mix(glm::vec3 {0.3,0.9,0.2}, glm::vec3 {0.1,0.5,0.05}, roundf(image.pixel(x,y).b*10)/5) + glm::vec3 {0.1};
             }
-            
         }           
     }
     image.save("output/heightMap.png");

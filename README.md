@@ -148,3 +148,55 @@ Résultat :
 </br>
 
 ###Mosaïque miroir ★★★
+
+Nous avons trouvé très difficile de gérer l'alternance entre les portions miroirs et le sens de leur inversion.
+
+Résultat : 
+![image](./output/mosaiqueMiroir.png)
+
+
+###Glitch ★★★
+
+Nous avons trouvé difficile de gérer les nombreuses opérandes simultanément.
+Pour cet effet, nous avons créé une boucle, chaque itération correspondant à un glitch, le glitch est représenté par l'échange de deux rectangles dont les positions (gérées par un struct) et les dimensions sont définies aléatoirement à chaque itération.
+
+
+Résultat : 
+![image](./output/glitch.png)
+
+###Fractale de Mandelbrot ★★★
+
+Nous avons eu du mal à trouvé comment passer d'un intervalle à l'autre et à comprendre comment faire apparaître les nuances de gris. 
+
+
+Résultat : 
+![image](./output/fractale.png)
+
+###Vortex ★★★
+
+Nous avons eu du mal à définir l'angle de rotation par point. 
+
+Résultat : 
+![image](./output/vortex.png)
+
+###Normalisation de l'histogramme ★★★(★)
+
+Nous avons eu du mal  à trouver la formule correcte de normalisation.
+
+Résultat : 
+![image](./output/normalisationHistogramme.png)
+
+###Convolutions ★★★★
+
+Nous avons eu du mal à trouver les bonnes conditions des boucles
+
+Résultat : 
+![image](./output/convolutions.png)
+
+###Tri de pixels ★★★★
+
+Nous avons trouvé difficile ai début le fonctionnement de sort puis nous avons bloqué sur une erreur dans les boucles en oubliant de réinitialiser le vecteur à chaque itération.
+
+Résultat : 
+![image](./output/triPixel.png)
+

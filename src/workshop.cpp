@@ -171,7 +171,7 @@ void disque(int rayon) {
         {
             for (int y{0}; y < image.height(); y++)
             {
-                if (pow(x-250,2.0)+pow(y-250,2.0)< pow(rayon,20))
+                if (pow(x-250,2.0)+pow(y-250,2.0)< pow(rayon,2.0)) // Oupsie le 20 qui devrait être un 2.0
                 {
                     image.pixel(x,y) = {1, 1, 1};
                 }
@@ -230,23 +230,10 @@ void mosaiqueMiroir(sil::Image image, int repetition) {
     {
         for (int y{0}; y < image.height(); y++)
         {
-            if (((x/(image.width()/repetition)))%2 != 0)
-            {
-                miroirHorizontal = true;
-            }
-            else
-            {
-                miroirHorizontal = false;
-            }
+            // Manière plus concise: le résultat de l'expression dans le if est déjà un booléen, vous pouvez juste assigner le résultat à votre bool
+           miroirHorizontal = ((x/(image.width()/repetition)))%2 != 0;
             
-            if (((y/(image.height()/repetition)))%2 != 0)
-            {
-                miroirVertical = true;
-            }
-            else
-            {
-                miroirVertical = false;
-            }
+            miroirVertical = ((y/(image.height()/repetition)))%2 != 0;
             
             if (miroirHorizontal && miroirVertical)
             {
@@ -743,7 +730,8 @@ void croix(int taille) {
         {
             for (int y{0}; y < image.height(); y++)
             {
-                if ((x > ((image.width() - taille)/2) && (x < image.width() - ((image.width() - taille)/2))) || (y > ((image.height() - taille)/2) && (y < image.height() - ((image.height() - taille)/2))))
+                if ((x > ((image.width() - taille)/2) && (x < image.width() - ((image.width() - taille)/2))) 
+                || (y > ((image.height() - taille)/2) && (y < image.height() - ((image.height() - taille)/2))))
                 {
                     image.pixel(x,y) = {1, 1, 1};
                 }

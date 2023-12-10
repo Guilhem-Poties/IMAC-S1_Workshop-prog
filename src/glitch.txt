@@ -4,25 +4,21 @@
 int main()
 {
     sil::Image image{"images/logo.png"};
-
-    int w {};
-    int h {};
+    
+    // Ne déclarez vos variables que au moment où vous en avez besoin
 
     struct position {
         int x;
         int y;
     };
 
-    position pos1 {};
-    position pos2 {};
-
     for (int _{0}; _ < 75; _++)
     {
-        w = random_int(15, 40);
-        h = random_int(2, 10);
+        int const w = random_int(15, 40);
+        int const h = random_int(2, 10);
 
-        pos1 = {random_int(0,image.width()-(w+1)), random_int(0,image.height()-(h+1))};
-        pos2 = {random_int(0,image.width()-(w+1)), random_int(0,image.height()-(h+1))};
+        position const pos1 = {random_int(0,image.width()-(w+1)), random_int(0,image.height()-(h+1))};
+        position const pos2 = {random_int(0,image.width()-(w+1)), random_int(0,image.height()-(h+1))};
 
         for (int x{0}; x < w; x++)
         {

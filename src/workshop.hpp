@@ -35,7 +35,7 @@ Pour chacune des couleurs faire 1 - la valeur de la couleur
 
 void degrade();
 
-enum sens {horizontal, vertical};
+enum class sens {horizontal, vertical}; // J'apprécie beaucoup l'usage des enums ! Ceci dit enum class est préférable à enum (cf le cours d'engue https://dsmte.github.io/Learn--cpp_programming/Lessons/S1/Variables#enum-un-type-suppl%C3%A9mentaire)
 
 void miroir(sil::Image image, sens sens = sens::vertical);
 /*Fait

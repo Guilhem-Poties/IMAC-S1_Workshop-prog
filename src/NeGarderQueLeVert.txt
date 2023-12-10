@@ -14,7 +14,10 @@ int main()
     }
 
     image.save("output/neGarderQueLeVert.png");
-}glm::vec3 moyenneLuminosite(std::vector<glm::vec3> ensembleCouleurs) {
+}
+
+/// C'est très bien d'avoir séparé l'algo en plusieurs fonctions intermédiaires 👍
+glm::vec3 moyenneLuminosite(std::vector<glm::vec3> const& ensembleCouleurs) { // Pensez à passer par const& quand vos objets sont gros (par exemple std::vector, std::string etc.). Ca évite une copie inutile.
     glm::vec3 somme {};
 
     for (int i = 0; i < ensembleCouleurs.size(); i++)
